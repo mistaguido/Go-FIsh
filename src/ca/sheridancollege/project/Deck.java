@@ -52,5 +52,10 @@ public class Deck extends GroupOfCards{
         }
         return strToReturn;
     }
+    
+    @Override
+    public void shuffle(){
+        Collections.shuffle(cards);
+    }
 
 }
