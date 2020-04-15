@@ -81,7 +81,6 @@ public class FGame extends Game {
         try {
             System.out.println("What ranks?");
             Value ranks[] = new Value[13];
-            int choice = sc.nextInt();
             int i = 0;
             for(Value value : Value.values()){
                 ranks[i]=value;
@@ -89,8 +88,10 @@ public class FGame extends Game {
             }
             
             for(int j = 0; j < ranks.length; j++){
-                System.out.println("["+j+"]" + ranks[i].toString());
+                System.out.println("["+j+"]" + ranks[j].toString());
             }
+            
+            int choice = sc.nextInt();
             
             if (choice == (int) choice){
                 if (choice >= 0 && choice < ranks.length){
