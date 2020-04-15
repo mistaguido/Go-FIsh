@@ -136,7 +136,7 @@ public class FGame extends Game {
         try {
             System.out.println("Which player do you choose?");
             for (int i = 0; i < playerList.size(); i++) {
-                if (playerList.get(i).getPlayerID()!=plyName){
+                if (!playerList.get(i).getPlayerID().equals(plyName)){
                 System.out.println("[" + i + "]" + playerList.get(i).getPlayerID());}
             }
             int choice = Integer.parseInt(sc.nextLine());
