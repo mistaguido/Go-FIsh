@@ -60,15 +60,22 @@ public class FGame extends Game {
         do {
             for (FPlayer ply : playerList) {
                 System.out.println(ply.getPlayerID() + "'s turn");
-                int plyIndex = askForPlayerIndex(playerList);
+                int plyIndex = askForPlayerIndex(playerList, ply.getPlayerID());
                 FCard guessCard = new FCard(askSuit(), askRank());
                 Deck plyDeck = playerList.get(plyIndex).getPlayerDeck();
-                for(FCard card : plyDeck.getCards()){
+                boolean boolCatch = false;
+                for(int i = 0; i < plyDeck.getCards().size(); i++){
                     //match
-                    if (guessCard == card){
+                    if (guessCard == plyDeck.getCards().get(i)){
+                        plyDeck.moveCardToDeck(i, plyDeck);
                         book.getBooks(ply.getPlayerDeck());
                         System.out.println("Match");
+                        boolCatch = true;
                     }
+                }
+                if (!boolCatch){
+                    System.out.println("Go fish");
+                    reserveDeck.moveCardToDeck(0, plyDeck);
                 }
             }
             books = book.getNoBooks();
@@ -125,15 +132,16 @@ public class FGame extends Game {
         }
     }
 
-    public int askForPlayerIndex(ArrayList<FPlayer> playerList) {
+    public int askForPlayerIndex(ArrayList<FPlayer> playerList, String plyName) {
         try {
             System.out.println("Which player do you choose?");
             for (int i = 0; i < playerList.size(); i++) {
-                System.out.println("[" + i + "]" + playerList.get(i).getPlayerID());
+                if (playerList.get(i).getPlayerID()!=plyName){
+                System.out.println("[" + i + "]" + playerList.get(i).getPlayerID());}
             }
             int choice = Integer.parseInt(sc.nextLine());
             if (choice == (int) choice) {
-                if (choice > 0 && choice < playerList.size()) {
+                if (choice >= 0 && choice < playerList.size()) {
                     return choice;
                 }
             }
