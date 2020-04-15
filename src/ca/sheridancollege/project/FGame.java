@@ -27,7 +27,6 @@ public class FGame extends Game {
             for (Value value : Value.values()) {
                 FCard card = new FCard(suit, value);
                 reserveList.add(card);
-                System.out.println(card.toString());
             }
         }
         ReserveDeck reserveDeck = new ReserveDeck(reserveList);
@@ -44,14 +43,6 @@ public class FGame extends Game {
 
         reserveDeck.distributeToPlayers(playerList, noOfPlayers);
 
-        //print out player cards
-        for (int i = 0; i < noOfPlayers; i++) {
-            Deck testDeck = playerList.get(i).getPlayerDeck();
-            int deckLength = testDeck.getSize();
-            System.out.println(deckLength);
-            System.out.println(testDeck.toString());
-        }
-
         System.out.println("Game will begin now");
 
         Books book = new Books();
@@ -60,23 +51,26 @@ public class FGame extends Game {
         do {
             for (FPlayer ply : playerList) {
                 System.out.println(ply.getPlayerID() + "'s turn");
-                int plyIndex = askForPlayerIndex(playerList, ply.getPlayerID());
-                FCard guessCard = new FCard(askSuit(), askRank());
-                Deck plyDeck = playerList.get(plyIndex).getPlayerDeck();
+                int plyIndex = askForPlayerIndex(playerList, ply.getPlayerID()); //ask which player
+                Value guessRank = askRank();
+                Deck opDeck = playerList.get(plyIndex).getPlayerDeck();
                 boolean boolCatch = false;
-                for(int i = 0; i < plyDeck.getCards().size(); i++){
+                //loop through opponent's cards to see if they have a card of that rank
+                for(int i = 0; i < opDeck.getCards().size(); i++){
                     //match
-                    if (guessCard == plyDeck.getCards().get(i)){
-                        plyDeck.moveCardToDeck(i, plyDeck);
+                    FCard opCard = opDeck.getCards().get(i);
+                    //if there's a match
+                    if (guessRank == opCard.getValue()){
+                        opDeck.moveCardToDeck(i, ply.getPlayerDeck());
                         book.getBooks(ply.getPlayerDeck());
-                        System.out.println("Match");
+                        System.out.println("Catch");
                         boolCatch = true;
                     }
                 }
                 if (!boolCatch){
                     System.out.println("Go fish");
                     if(reserveDeck.getSize() > 0){
-                        reserveDeck.moveCardToDeck(0, plyDeck);
+                        reserveDeck.moveCardToDeck(0, opDeck);
                     }else{
                         System.out.println("There are no more cards on the table");
                     }
@@ -112,27 +106,6 @@ public class FGame extends Game {
             return askRank();
         } catch (NumberFormatException e) {
             return askRank();
-        }
-    }
-
-    public Suit askSuit() {
-        try {
-            System.out.println("Which suit?\n[0] Clubs\n[1] Diamonds\n[2] Hearts\n[3] Spades");
-            int choice = sc.nextInt();
-            switch (choice) {
-                case 0:
-                    return Suit.CLUBS;
-                case 1:
-                    return Suit.DIAMONDS;
-                case 2:
-                    return Suit.HEARTS;
-                case 3:
-                    return Suit.SPADES;
-                default:
-                    return askSuit();
-            }
-        } catch (NumberFormatException e) {
-            return askSuit();
         }
     }
 
