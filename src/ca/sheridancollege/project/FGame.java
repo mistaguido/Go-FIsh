@@ -145,9 +145,9 @@ public class FGame extends Game {
                     return choice;
                 }
             }
-            return askForPlayerIndex(playerList);
+            return askForPlayerIndex(playerList, plyName);
         } catch (NumberFormatException e) {
-            return askForPlayerIndex(playerList);
+            return askForPlayerIndex(playerList, plyName);
         }
     }
 
