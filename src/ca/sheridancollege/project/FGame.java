@@ -33,7 +33,7 @@ public class FGame extends Game {
         ReserveDeck reserveDeck = new ReserveDeck(reserveList);
 
         //players
-        System.out.println("Enter number of players (more than 2, less than 52): ");
+        System.out.println("Enter number of players (more than 2, less than 4): ");
         int noOfPlayers = askForNoPlayer();
         //players
         System.out.println("Enter player names");
@@ -75,7 +75,11 @@ public class FGame extends Game {
                 }
                 if (!boolCatch){
                     System.out.println("Go fish");
-                    reserveDeck.moveCardToDeck(0, plyDeck);
+                    if(reserveDeck.getSize() > 0){
+                        reserveDeck.moveCardToDeck(0, plyDeck);
+                    }else{
+                        System.out.println("There are no more cards in the reserve deck");
+                    }
                 }
             }
             books = book.getNoBooks();
@@ -156,7 +160,7 @@ public class FGame extends Game {
             int x = Integer.parseInt(sc.nextLine());
             if (x == (int) x) {
                 if (x > 1) {
-                    if (x > 52) {
+                    if (x > 4) {
                         System.out.println("Too many players");
                         return askForNoPlayer();
                     } else {
