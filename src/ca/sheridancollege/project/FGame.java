@@ -139,7 +139,7 @@ public class FGame extends Game {
     public int askForPlayerIndex(ArrayList<FPlayer> playerList, String plyName) {
         try {
             System.out.println("Which player do you choose?");
-            int plyindex;
+            int plyindex=0;
             for (int i = 0; i < playerList.size(); i++) {
                 if (!playerList.get(i).getPlayerID().equals(plyName)){
                 System.out.println("[" + i + "]" + playerList.get(i).getPlayerID());}else{
