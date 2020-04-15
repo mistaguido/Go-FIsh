@@ -78,7 +78,7 @@ public class FGame extends Game {
                     if(reserveDeck.getSize() > 0){
                         reserveDeck.moveCardToDeck(0, plyDeck);
                     }else{
-                        System.out.println("There are no more cards in the reserve deck");
+                        System.out.println("There are no more cards on the table");
                     }
                 }
             }
@@ -139,13 +139,16 @@ public class FGame extends Game {
     public int askForPlayerIndex(ArrayList<FPlayer> playerList, String plyName) {
         try {
             System.out.println("Which player do you choose?");
+            int plyindex;
             for (int i = 0; i < playerList.size(); i++) {
                 if (!playerList.get(i).getPlayerID().equals(plyName)){
-                System.out.println("[" + i + "]" + playerList.get(i).getPlayerID());}
+                System.out.println("[" + i + "]" + playerList.get(i).getPlayerID());}else{
+                    plyindex=i;
+                }
             }
             int choice = Integer.parseInt(sc.nextLine());
             if (choice == (int) choice) {
-                if (choice >= 0 && choice < playerList.size()) {
+                if ((choice >= 0 && choice < playerList.size()) && choice != plyindex) {
                     return choice;
                 }
             }
